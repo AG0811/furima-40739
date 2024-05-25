@@ -15,7 +15,6 @@
 
 has_many : items
 has_many : transactions
-has_many :addresses
 
 ## items テーブル (出品情報)
 
@@ -32,8 +31,8 @@ has_many :addresses
 | price            | integer    | null: false                    |
 
 belongs_to : user
-belongs_to : transaction
-has_one_attached :image (Active Storage)
+has_one : transaction
+has_one_attached : image (Active Storage)
 
 ## transactions テーブル (購入履歴)
 
@@ -44,13 +43,12 @@ has_one_attached :image (Active Storage)
 
 belongs_to : user
 belongs_to : item
-has_one :address
+has_one : address
 
 ## addresses テーブル (受取先情報)
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
-| user           | references | null: false, foreign_key: true |
 | transaction    | references | null: false, foreign_key: true |
 | postcode       | string     | null: false                    |
 | prefecture_id  | integer    | null: false                    |
@@ -59,8 +57,7 @@ has_one :address
 | building_name  | string     |                                |
 | phone_number   | string     | null: false                    |
 
-belongs_to :user
-belongs_to :transaction
+belongs_to : transaction
 
 ※未設定（フリマの見本アプリ反映未確認）
 コメント
