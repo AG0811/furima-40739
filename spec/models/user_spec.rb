@@ -74,13 +74,13 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Email is invalid")
       end
       it "passwordに英字が無い場合登録できない" do
-        @user.password = "123456" # 英字が含まれていないパスワード
+        @user.password = "123456"
         @user.password_confirmation = @user.password
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid. Include both letters and numbers")
       end
       it "passwordに数字が無い場合登録できない" do
-        @user.password = "abcdef" # 数字が含まれていないパスワード
+        @user.password = "abcdef"
         @user.password_confirmation = @user.password
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid. Include both letters and numbers")
@@ -121,6 +121,12 @@ RSpec.describe User, type: :model do
         @user.birthday = 'invalid_date'
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday is invalid")
+      end
+      it "全角文字を含むパスワードでは登録できない" do
+        @user.password = "パスワード123"
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Include both letters and numbers")
       end
     end
   end
