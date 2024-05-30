@@ -17,11 +17,11 @@ RSpec.describe Item, type: :model do
       @item.valid?
       expect(@item.errors.full_messages).to include("Item name can't be blank")
     end
-      it 'item_nameが40文字を超えると登録できない' do
-        @item.item_name = 'a' * 41
-        @item.valid?
-        expect(@item.errors.full_messages).to include("Item name is too long (maximum is 40 characters)")
-      end
+    it 'item_nameが40文字を超えると登録できない' do
+      @item.item_name = 'a' * 41
+      @item.valid?
+      expect(@item.errors.full_messages).to include('Item name is too long (maximum is 40 characters)')
+    end
     it 'item_descriptionが空では登録できない' do
       @item.item_description = ''
       @item.valid?
@@ -30,7 +30,7 @@ RSpec.describe Item, type: :model do
     it 'item_descriptionが1000文字を超えると登録できない' do
       @item.item_description = 'a' * 1001
       @item.valid?
-      expect(@item.errors.full_messages).to include("Item description is too long (maximum is 1000 characters)")
+      expect(@item.errors.full_messages).to include('Item description is too long (maximum is 1000 characters)')
     end
     it 'category_idが空では登録できない' do
       @item.category_id = nil
@@ -91,20 +91,19 @@ RSpec.describe Item, type: :model do
     it 'priceが300未満では登録できない' do
       @item.price = 299
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price must be a number between 300 and 9,999,999")
+      expect(@item.errors.full_messages).to include('Price must be a number between 300 and 9,999,999')
     end
 
     it 'priceが9,999,999より大きいと登録できない' do
       @item.price = 10_000_000
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price must be a number between 300 and 9,999,999")
+      expect(@item.errors.full_messages).to include('Price must be a number between 300 and 9,999,999')
     end
 
     it 'priceが半角数値でなければ登録できない' do
       @item.price = 'a'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price must be a number between 300 and 9,999,999")
+      expect(@item.errors.full_messages).to include('Price must be a number between 300 and 9,999,999')
     end
   end
 end
-
