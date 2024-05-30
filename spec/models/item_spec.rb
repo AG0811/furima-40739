@@ -11,7 +11,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  context '新規登録できない場合' do
+  context 'ユーザー情報がない場合は登録できないこと' do
     it 'item_nameが空では登録できない' do
       @item.item_name = ''
       @item.valid?
