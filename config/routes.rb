@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   devise_for :users #自動追記されなかった
-  resources :items, only: :index
+  resources :items
   root "items#index"
 end
