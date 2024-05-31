@@ -6,6 +6,11 @@ class ItemsController < ApplicationController
     load_dropdowns
   end
 
+  def show
+    @item = Item.find(params[:id])
+    load_dropdowns
+  end
+
   def new
     @item = Item.new
     load_dropdowns
