@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_item, only: [:show, :edit, :update]
+  before_action :authorize_user!, only: [:edit, :update]
+  before_action :load_dropdowns, only: [:new, :create, :edit, :update, :show]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -8,46 +10,41 @@ class ItemsController < ApplicationController
   end
 
   def show
-    set_item
-    load_dropdowns
   end
+
   def edit
-    if current_user != @item.user
-      redirect_to root_path
-    else
-      set_item
-      load_dropdowns
-    end
   end
+
   def update
-    set_item
-    if current_user != @item.user
-      redirect_to root_path
-    elsif @item.update(item_params)
+    if @item.update(item_params)
       redirect_to item_path(@item)
     else
-      load_dropdowns
       render 'edit', status: :unprocessable_entity
     end
   end
+
   def new
     @item = Item.new
-    load_dropdowns
   end
 
   def create
     # @item = Item.new(item_params)
     # if @item.save
-    @item = Item.create(item_params)
-    if @item.persisted?
+    @item = Item.new(item_params)
+    if @item.save
       redirect_to root_path
     else
-      load_dropdowns
       render 'new', status: :unprocessable_entity
     end
   end
 
   private
+
+  def authorize_user!
+    return if current_user == @item.user
+
+    redirect_to root_path
+  end
 
   def set_item
     @item = Item.find(params[:id])
