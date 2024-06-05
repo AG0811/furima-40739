@@ -7,6 +7,9 @@ class OrdersController < ApplicationController
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_address = OrderAddress.new
+
+    # カレントユーザーと@itemの所有者のIDが一致した場合、root_pathにリダイレクトする
+    redirect_to root_path if current_user.id == @item.user_id
   end
 
   def create
@@ -29,7 +32,7 @@ class OrdersController < ApplicationController
   private
 
   def set_item
-    @item = Item.find_by(id: params[:item_id]) || Item.find(1)
+    @item = Item.find_by(id: params[:item_id])
   end
 
   def redirect_if_sold
