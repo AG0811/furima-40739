@@ -109,7 +109,7 @@ GEM
     faker (3.3.1)
       i18n (>= 1.8.11, < 2)
     faker-japanese (0.0.1)
-    ffi (1.16.3)
+    ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     gon (6.4.0)

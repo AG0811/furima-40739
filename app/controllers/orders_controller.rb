@@ -55,6 +55,7 @@ class OrdersController < ApplicationController
   end
 
   def load_dropdowns
+    @burdens = Pulldown::Burden.all
     @prefectures = Pulldown::Prefecture.all
   end
 end

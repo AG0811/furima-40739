@@ -1,14 +1,20 @@
-# spec/models/order_address_spec.rb
 require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @order_address = FactoryBot.build(:order_address)
+    @item = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user)
+    @order_address = FactoryBot.build(:order_address, item_id: @item.id, user_id: @user.id)
   end
 
   describe 'バリデーション' do
     context '有効な属性の場合' do
       it 'すべての属性が有効であること' do
+        expect(@order_address).to be_valid
+      end
+
+      it '建物名が空でも保存できること' do
+        @order_address.building_name = nil
         expect(@order_address).to be_valid
       end
     end
@@ -70,6 +76,12 @@ RSpec.describe OrderAddress, type: :model do
 
       it '電話番号が短すぎると無効であること' do
         @order_address.phone_number = '090123'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone number is too short")
+      end
+      
+      it '電話番号が長すぎると無効であること' do
+        @order_address.phone_number = '090123456789'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Phone number is too short")
       end

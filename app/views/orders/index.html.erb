@@ -8,15 +8,14 @@
     </h1>
     <%# 購入内容の表示 %>
     <div class='buy-item-info'>
-      <%= image_tag "item-sample.png", class: 'buy-item-img' %>
+      <%= image_tag @item.image, class: 'buy-item-img' %>
       <div class='buy-item-right-content'>
         <h2 class='buy-item-text'>
           <%= @item.item_name %>
         </h2>
         <div class='buy-item-price'>
           <p class='item-price-text'>¥<%= @item.price %></p>
-          <p class='item-price-sub-text'><%= '配送料負担' %></p>
-          <%# @item.burden_id %>
+          <p class='item-price-sub-text'><%= @burdens.find(@item.burden_id).name %></p>
         </div>
       </div>
     </div>
