@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :days, class_name: 'Pulldown::Days'
 
   belongs_to :user
-  # has_one :transaction
+  has_one :order
   has_one_attached :image
 
   validates :image, presence: { message: "can't be blank" }

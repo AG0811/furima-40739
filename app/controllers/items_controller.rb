@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_if_sold, only: [:edit, :update, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
   before_action :load_dropdowns, only: [:new, :create, :edit, :update, :show]
 
@@ -53,6 +54,12 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def redirect_if_sold
+    return unless Order.exists?(item_id: @item.id)
+
+    redirect_to root_path # , alert: 'この商品は既に売れています。'
   end
 
   def item_params

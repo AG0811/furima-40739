@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :birthday, presence: true
 
   has_many :items
-  # has_many :transactions
+  has_many :orders
 
   # 本人情報確認のバリデーション
   with_options presence: true do
