@@ -55,11 +55,13 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
+
   def redirect_if_sold
-    if Order.exists?(item_id: @item.id)
-      redirect_to root_path #, alert: 'この商品は既に売れています。'
-    end
+    return unless Order.exists?(item_id: @item.id)
+
+    redirect_to root_path # , alert: 'この商品は既に売れています。'
   end
+
   def item_params
     params.require(:item).permit(:item_name, :item_description, :category_id, :condition_id, :burden_id, :prefecture_id,
                                  :days_id, :price, :image).merge(user_id: current_user.id)
