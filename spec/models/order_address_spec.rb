@@ -26,6 +26,18 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
       end
 
+      it 'user_idが空では登録できないこと' do
+        @order_address.user_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空では登録できないこと' do
+        @order_address.item_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Item can't be blank")
+      end
+
       it '郵便番号がないと無効であること' do
         @order_address.postcode = nil
         @order_address.valid?
@@ -35,7 +47,7 @@ RSpec.describe OrderAddress, type: :model do
       it '郵便番号の形式が正しくないと無効であること' do
         @order_address.postcode = '1234567'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postcode is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@order_address.errors.full_messages).to include('Postcode is invalid. Enter it as follows (e.g. 123-4567)')
       end
 
       it '都道府県IDがないと無効であること' do
@@ -77,19 +89,19 @@ RSpec.describe OrderAddress, type: :model do
       it '電話番号が短すぎると無効であること' do
         @order_address.phone_number = '090123'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is too short")
+        expect(@order_address.errors.full_messages).to include('Phone number is too short')
       end
-      
+
       it '電話番号が長すぎると無効であること' do
         @order_address.phone_number = '090123456789'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is too short")
+        expect(@order_address.errors.full_messages).to include('Phone number is too short')
       end
 
       it '電話番号の形式が正しくないと無効であること' do
         @order_address.phone_number = '090-1234-5678'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only numbers")
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only numbers')
       end
     end
   end
