@@ -17,9 +17,10 @@ class OrderAddress
   validate :validate_prefecture_id
 
   def validate_prefecture_id
-    return unless prefecture_id.nil? || prefecture_id == 0 || prefecture_id == 1
-
-    errors.add(:prefecture_id, "can't be blank")
+    # フォームから受け取る値がintではなく文字列扱いのため
+    if prefecture_id.nil? || prefecture_id.to_i <= 1
+      errors.add(:prefecture_id, "can't be blank")
+    end
   end
 
   def save
